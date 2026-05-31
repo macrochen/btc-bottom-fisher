@@ -4,6 +4,7 @@
   "description": "Bitcoin Bottom Fishing Dashboard",
   "main": "src/index.ts",
   "scripts": {
+    "start": "./start.sh",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },
