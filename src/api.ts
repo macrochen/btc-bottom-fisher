@@ -3,10 +3,10 @@ export const ALTCOINS = [
   "SHIB", "LTC", "UNI", "BCH", "XLM", "NEAR", "APT", "ARB", "OP", "ATOM"
 ];
 
-export async function fetchBinanceKlines(symbol: string, interval: string, limit: number) {
-  const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
+export async function fetchMexcKlines(symbol: string, interval: string, limit: number) {
+  const url = `https://api.mexc.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
   const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' }});
-  if (!res.ok) throw new Error(`Binance API error: ${res.status}`);
+  if (!res.ok) throw new Error(`MEXC API error: ${res.status}`);
   const data = await res.json() as any[][];
   return data.map(candle => parseFloat(candle[4])); // closing prices
 }
@@ -37,7 +37,7 @@ export async function fetchAltcoinSeasonIndex(btc90dReturn: number) {
   
   const promises = ALTCOINS.map(async (coin) => {
     try {
-      const prices = await fetchBinanceKlines(`${coin}USDT`, '1d', 90);
+      const prices = await fetchMexcKlines(`${coin}USDT`, '1d', 90);
       if (prices.length >= 80) {
         const p1 = prices[0];
         const p2 = prices[prices.length - 1];

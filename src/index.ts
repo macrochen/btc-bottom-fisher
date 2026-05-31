@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { fetchBinanceKlines, fetchFearAndGreed, fetchCoinGeckoBTC365d, fetchAltcoinSeasonIndex } from './api';
+import { fetchMexcKlines, fetchFearAndGreed, fetchCoinGeckoBTC365d, fetchAltcoinSeasonIndex } from './api';
 import { calculateMA, calculateRSI, evaluateIndicators } from './calc';
 
 const app = new Hono();
@@ -8,7 +8,7 @@ app.get('/api/data', async (c) => {
   try {
     // 1. Fetch data
     const [btc90d, fearAndGreed, btc365d] = await Promise.all([
-      fetchBinanceKlines('BTCUSDT', '1d', 90),
+      fetchMexcKlines('BTCUSDT', '1d', 90),
       fetchFearAndGreed(),
       fetchCoinGeckoBTC365d()
     ]);
