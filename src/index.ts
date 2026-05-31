@@ -142,27 +142,42 @@ app.get('/', (c) => {
                 </h3>
                 <div class="space-y-4 text-sm text-slate-300">
                     <div class="border-l-2 border-slate-600 pl-4">
-                        <h4 class="font-bold text-slate-100 text-base mb-1">1. 60日均线偏离度 (MA60 Deviation)</h4>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>1. 60日均线偏离度 (MA60 Deviation)</span>
+                            <a href="https://www.tradingview.com/chart/?symbol=BINANCE:BTCUSDT" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 查看图表</a>
+                        </h4>
                         <p><span class="text-cyan-400">原理：</span>均线是用来算账的。当当下价格大幅度低于60天前的平均持仓成本时，意味着短线情绪彻底崩溃，跌出了“黄金坑”。</p>
                         <p><span class="text-yellow-400">看盘指南：</span>正常震荡市中偏离度在 ±5% 左右。一旦偏离度跌破 -15%，说明价格已处于绝对低位，触发买入信号。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
-                        <h4 class="font-bold text-slate-100 text-base mb-1">2. 恐慌贪婪指数 (Fear & Greed Index)</h4>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>2. 恐慌贪婪指数 (Fear & Greed Index)</span>
+                            <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 数据源</a>
+                        </h4>
                         <p><span class="text-cyan-400">原理：</span>该指数结合了波动率、市场动能、社交媒体等多种数据。巴菲特说过“别人恐惧我贪婪”。</p>
                         <p><span class="text-yellow-400">看盘指南：</span>当指数跌破 30，市场进入人人自危的恐慌期，适合开始关注；跌破 10 则是极度恐慌的绝望期，胜率极高，必须坚决买入。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
-                        <h4 class="font-bold text-slate-100 text-base mb-1">3. 普尔倍数 (Puell Multiple)</h4>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>3. 普尔倍数 (Puell Multiple)</span>
+                            <a href="https://www.lookintobitcoin.com/charts/puell-multiple/" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 LookIntoBitcoin</a>
+                        </h4>
                         <p><span class="text-cyan-400">原理：</span>普尔倍数衡量的是每天比特币产出价值与过去365天平均值的比率。由于矿工有硬性的法币开支（电费、矿机），这是一个底层逻辑极强的矿工底线指标。</p>
                         <p><span class="text-yellow-400">看盘指南：</span>当指标跌破 0.5 时，意味着全网矿工在痛苦割肉，往往对应着几十年不遇的周期大底部。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
-                        <h4 class="font-bold text-slate-100 text-base mb-1">4. 日线 RSI (14)</h4>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>4. 日线 RSI (14)</span>
+                            <a href="https://www.tradingview.com/chart/?symbol=BINANCE:BTCUSDT" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 查看图表</a>
+                        </h4>
                         <p><span class="text-cyan-400">原理：</span>相对强弱指数，反映价格涨跌的动能。像弹簧一样，压得越狠，反弹力越强。</p>
                         <p><span class="text-yellow-400">看盘指南：</span>跌破 35 即进入超卖状态。历史上 90% 的日线级别严重超卖，随后都会迎来 20% 以上的强力反弹。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
-                        <h4 class="font-bold text-slate-100 text-base mb-1">5. 山寨季指数 (Altcoin Season Index)</h4>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>5. 山寨季指数 (Altcoin Season Index)</span>
+                            <a href="https://www.blockchaincenter.net/en/altcoin-season-index/" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 官方指数网站</a>
+                        </h4>
                         <p><span class="text-cyan-400">原理：</span>衡量排名前20的主流山寨币在过去 90 天内跑赢比特币的比例。</p>
                         <p><span class="text-yellow-400">看盘指南：</span>如果在高位(>75)，说明山寨群魔乱舞，随时可能崩盘，此时有买点也应该买大饼避险；如果在极低的底部(<25)，说明山寨泡沫挤干，此时买入主流山寨币将获得超高的翻倍弹性。</p>
                     </div>
