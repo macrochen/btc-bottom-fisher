@@ -289,7 +289,29 @@ app.get('/', (c) => {
                     return;
                 }
 
-                document.getElementById('loading').classList.add('hidden');
+                // Client-side CBBI fallback (if Cloudflare Worker was blocked)
+                if (data.cbbi === '--') {
+                    try {
+                        const cbbiRes = await fetch('https://colintalkscrypto.com/cbbi/data/latest.json');
+                        const cbbiData = await cbbiRes.json();
+                        if (cbbiData && cbbiData.Confidence) {
+                            const keys = Object.keys(cbbiData.Confidence);
+                            const lastKey = keys[keys.length - 1];
+                            data.cbbi = Math.round(cbbiData.Confidence[lastKey] * 100);
+                            
+                            // Adjust glowing logic client-side
+                            if (data.cbbi < 15) {
+                                data.evaluation.details.isCbbiBottom = true;
+                            } else if (data.cbbi > 80) {
+                                data.evaluation.details.isCbbiTop = true;
+                            }
+                        }
+                    } catch(e) {
+                        console.error('Frontend CBBI fetch failed', e);
+                    }
+                }
+
+                document.getElementById('loading').style.display = 'none';
                 document.getElementById('dashboard').classList.remove('hidden');
 
                 // Fill values

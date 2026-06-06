@@ -123,7 +123,7 @@ export async function fetchCBBI() {
       const keys = Object.keys(data.Confidence);
       if (keys.length > 0) {
         const latestKey = keys[keys.length - 1];
-        return data.Confidence[latestKey] as number;
+        return Math.round(data.Confidence[latestKey] * 100);
       }
     }
   } catch (e) {
