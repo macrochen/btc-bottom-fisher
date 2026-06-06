@@ -43,8 +43,15 @@ export function evaluateIndicators(data: {
   ma60Deviation: number;
   fearAndGreed: number;
   puellMultiple: number;
+  mvrv: number | null;
+  nupl: number | null;
+  sopr: number | null;
+  cbbi: number | null;
+  ma111: number;
+  ma350: number;
 }) {
   let triggers = 0;
+  let topWarnings = 0;
 
   // 1. RSI < 35 (Super oversold)
   const isRsiTriggered = data.rsi < 35;
@@ -62,10 +69,34 @@ export function evaluateIndicators(data: {
   const isPuellTriggered = data.puellMultiple < 0.5;
   if (isPuellTriggered) triggers++;
 
+  // 5. MVRV < 1.0 (Value bottom line)
+  const isMvrvTriggered = data.mvrv !== null && data.mvrv < 1.0;
+  if (isMvrvTriggered) triggers++;
+
+  // 6. NUPL < 0 (Net loss)
+  const isNuplTriggered = data.nupl !== null && data.nupl < 0;
+  if (isNuplTriggered) triggers++;
+
+  // 7. SOPR < 1.0 (Selling at a loss)
+  const isSoprTriggered = data.sopr !== null && data.sopr < 1.0;
+  if (isSoprTriggered) triggers++;
+
+  // --- Top Warnings ---
+  const isPiCycleTop = data.ma111 > 0 && data.ma350 > 0 && data.ma111 > (data.ma350 * 2);
+  if (isPiCycleTop) topWarnings++;
+
+  const isCbbiTop = data.cbbi !== null && data.cbbi > 80;
+  if (isCbbiTop) topWarnings++;
+  
+  const isCbbiBottom = data.cbbi !== null && data.cbbi < 15;
+  if (isCbbiBottom) triggers++;
+
   let rating = "Wait";
-  if (triggers >= 3) {
+  if (topWarnings > 0) {
+    rating = "Top Warning";
+  } else if (triggers >= 5) {
     rating = "Strong Buy";
-  } else if (triggers >= 2) {
+  } else if (triggers >= 3) {
     rating = "Accumulate";
   }
 
@@ -77,6 +108,12 @@ export function evaluateIndicators(data: {
       isMaTriggered,
       isFearTriggered,
       isPuellTriggered,
+      isMvrvTriggered,
+      isNuplTriggered,
+      isSoprTriggered,
+      isPiCycleTop,
+      isCbbiTop,
+      isCbbiBottom,
     }
   };
 }

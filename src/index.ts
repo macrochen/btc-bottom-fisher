@@ -1,16 +1,23 @@
 import { Hono } from 'hono';
-import { fetchMexcKlines, fetchFearAndGreed, fetchCoinGeckoBTC365d, fetchAltcoinSeasonIndex } from './api';
+import { fetchMexcKlines, fetchFearAndGreed, fetchCoinGeckoBTC365d, fetchAltcoinSeasonIndex, fetchMvrv, fetchNupl, fetchSopr, fetchCBBI } from './api';
 import { calculateMA, calculateRSI, evaluateIndicators } from './calc';
 
 const app = new Hono();
 
 app.get('/api/data', async (c) => {
   try {
+    const env = c.env as Record<string, string>;
+    const bgeometricsKey = env?.BGEOMETRICS_API_KEY || '';
+
     // 1. Fetch data
-    const [btc90d, fearAndGreed, btc365d] = await Promise.all([
+    const [btc90d, fearAndGreed, btc365d, mvrv, nupl, sopr, cbbi] = await Promise.all([
       fetchMexcKlines('BTCUSDT', '1d', 90),
       fetchFearAndGreed(),
-      fetchCoinGeckoBTC365d()
+      fetchCoinGeckoBTC365d(),
+      fetchMvrv(bgeometricsKey),
+      fetchNupl(bgeometricsKey),
+      fetchSopr(bgeometricsKey),
+      fetchCBBI()
     ]);
 
     const currentPrice = btc90d[btc90d.length - 1];
@@ -22,11 +29,15 @@ app.get('/api/data', async (c) => {
     const rsi14 = calculateRSI(btc90d, 14);
 
     let puellMultiple = 1.0;
+    let ma111 = 0;
+    let ma350 = 0;
     if (btc365d && btc365d.length > 0) {
       const ma365 = calculateMA(btc365d, 365);
       if (ma365 > 0) {
         puellMultiple = currentPrice / ma365;
       }
+      ma111 = calculateMA(btc365d, 111);
+      ma350 = calculateMA(btc365d, 350);
     } else {
       puellMultiple = currentPrice / ma60; // Fallback
     }
@@ -41,6 +52,12 @@ app.get('/api/data', async (c) => {
       ma60Deviation,
       fearAndGreed,
       puellMultiple,
+      mvrv,
+      nupl,
+      sopr,
+      cbbi,
+      ma111,
+      ma350
     });
 
     // 4. Return JSON
@@ -50,6 +67,11 @@ app.get('/api/data', async (c) => {
       ma60Deviation: (ma60Deviation * 100).toFixed(2) + '%',
       fearAndGreed,
       puellMultiple: puellMultiple.toFixed(2),
+      mvrv: mvrv !== null ? mvrv.toFixed(2) : '--',
+      nupl: nupl !== null ? nupl.toFixed(2) : '--',
+      sopr: sopr !== null ? sopr.toFixed(2) : '--',
+      cbbi: cbbi !== null ? cbbi : '--',
+      piCycleTriggered: evaluation.details.isPiCycleTop,
       altcoinSeasonIndex,
       evaluation,
       timestamp: new Date().toISOString()
@@ -131,6 +153,36 @@ app.get('/', (c) => {
                     <div class="text-2xl font-bold mb-2" id="val-puell">--</div>
                     <div class="text-xs">阈值: < 0.5 触发</div>
                 </div>
+                <!-- MVRV -->
+                <div class="cyber-card p-5" id="card-mvrv">
+                    <div class="text-xs text-slate-400 mb-1">MVRV 估值</div>
+                    <div class="text-2xl font-bold mb-2" id="val-mvrv">--</div>
+                    <div class="text-xs">阈值: < 1.0 触发</div>
+                </div>
+                <!-- NUPL -->
+                <div class="cyber-card p-5" id="card-nupl">
+                    <div class="text-xs text-slate-400 mb-1">NUPL (净未实现利润)</div>
+                    <div class="text-2xl font-bold mb-2" id="val-nupl">--</div>
+                    <div class="text-xs">阈值: < 0 触发</div>
+                </div>
+                <!-- SOPR -->
+                <div class="cyber-card p-5" id="card-sopr">
+                    <div class="text-xs text-slate-400 mb-1">SOPR (已花费输出利润率)</div>
+                    <div class="text-2xl font-bold mb-2" id="val-sopr">--</div>
+                    <div class="text-xs">阈值: < 1.0 触发</div>
+                </div>
+                <!-- CBBI -->
+                <div class="cyber-card p-5" id="card-cbbi">
+                    <div class="text-xs text-slate-400 mb-1">CBBI 牛熊指数</div>
+                    <div class="text-2xl font-bold mb-2" id="val-cbbi">--</div>
+                    <div class="text-xs">底部: < 15 / 顶部: > 80</div>
+                </div>
+                <!-- Pi Cycle Top -->
+                <div class="cyber-card p-5" id="card-pi">
+                    <div class="text-xs text-slate-400 mb-1">Pi Cycle Top 预警</div>
+                    <div class="text-2xl font-bold mb-2" id="val-pi">安全</div>
+                    <div class="text-xs">111DMA > 350DMA×2 时告警</div>
+                </div>
             </div>
             
             <div class="text-center text-xs text-slate-500 mb-8">更新时间: <span id="update-time"></span></div>
@@ -176,7 +228,43 @@ app.get('/', (c) => {
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
                         <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
-                            <span>5. 山寨季指数 (Altcoin Season Index)</span>
+                            <span>5. MVRV 估值指标 (Market Value to Realized Value)</span>
+                        </h4>
+                        <p><span class="text-cyan-400">原理：</span>衡量全网比特币当前总市值与“已实现市值”（即所有比特币最后一次移动时的价格总和）的比率。它直观反映了市场的平均浮盈/浮亏状态。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>当指标跌破 1.0 时，意味着市场整体处于“浮亏”状态，此时恐慌割肉盘涌出，属于长周期极佳的定投建仓区。</p>
+                    </div>
+                    <div class="border-l-2 border-slate-600 pl-4">
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>6. NUPL (Net Unrealized Profit/Loss)</span>
+                        </h4>
+                        <p><span class="text-cyan-400">原理：</span>衡量全网筹码的净未实现利润与亏损状态，偏向情绪指标。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>跌破 0 意味着大面积亏损，恐慌情绪达到冰点，为熊市末期常见特征。</p>
+                    </div>
+                    <div class="border-l-2 border-slate-600 pl-4">
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>7. SOPR (Spent Output Profit Ratio)</span>
+                        </h4>
+                        <p><span class="text-cyan-400">原理：</span>计算当日在链上转移的 BTC 相比上次移动的盈亏情况。判断抛压是止盈还是割肉。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>持续 < 1 说明人们在割肉。熊市末期极佳建仓区。</p>
+                    </div>
+                    <div class="border-l-2 border-slate-600 pl-4">
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>8. CBBI (综合牛市指数)</span>
+                            <a href="https://cbbi.info/" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 CBBI 官网</a>
+                        </h4>
+                        <p><span class="text-cyan-400">原理：</span>整合多个顶级链上指标的综合得分 (0-100)，避免单一指标失效。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>< 15 提示深熊极度低估；> 80 提示狂暴牛市见顶风险。</p>
+                    </div>
+                    <div class="border-l-2 border-slate-600 pl-4">
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>9. Pi Cycle Top</span>
+                        </h4>
+                        <p><span class="text-cyan-400">原理：</span>当短期均线 (111日) 疯狂拉升上穿长期均线乘数 (350日×2) 时，历史周期均在此附近见顶。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>属于纯粹的“危险报警器”，警报响起时应考虑清仓逃顶。</p>
+                    </div>
+                    <div class="border-l-2 border-slate-600 pl-4">
+                        <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
+                            <span>10. 山寨季指数 (Altcoin Season Index)</span>
                             <a href="https://www.blockchaincenter.net/en/altcoin-season-index/" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 官方指数网站</a>
                         </h4>
                         <p><span class="text-cyan-400">原理：</span>衡量排名前20的主流山寨币在过去 90 天内跑赢比特币的比例。</p>
@@ -207,6 +295,16 @@ app.get('/', (c) => {
                 document.getElementById('val-ma').innerText = data.ma60Deviation;
                 document.getElementById('val-fear').innerText = data.fearAndGreed;
                 document.getElementById('val-puell').innerText = data.puellMultiple;
+                document.getElementById('val-mvrv').innerText = data.mvrv;
+                document.getElementById('val-nupl').innerText = data.nupl;
+                document.getElementById('val-sopr').innerText = data.sopr;
+                document.getElementById('val-cbbi').innerText = data.cbbi;
+                document.getElementById('val-pi').innerText = data.piCycleTriggered ? '⚠️ 极度危险' : '安全';
+                if (data.piCycleTriggered) {
+                    document.getElementById('val-pi').classList.replace('text-white', 'text-red-500');
+                    document.getElementById('card-pi').classList.add('glow-red');
+                }
+                
                 document.getElementById('alt-season').innerText = '山寨季指数 (前20): ' + data.altcoinSeasonIndex;
                 document.getElementById('update-time').innerText = new Date(data.timestamp).toLocaleString();
 
@@ -215,17 +313,23 @@ app.get('/', (c) => {
                 const ratingEl = document.getElementById('rating');
                 const signalCard = document.getElementById('signal-card');
                 
-                ratingEl.innerText = r === 'Strong Buy' ? '强力买入' : (r === 'Accumulate' ? '定投吸筹' : '持币观望');
-                document.getElementById('trigger-count').innerText = eval.triggers + ' / 4 指标达标';
-
-                if (r === 'Strong Buy') {
+                if (r === 'Top Warning') {
+                    ratingEl.innerText = '⚠️ 逃顶警告';
+                    ratingEl.className = "text-5xl font-black mb-4 uppercase text-red-500";
+                    signalCard.classList.add('glow-red');
+                } else if (r === 'Strong Buy') {
+                    ratingEl.innerText = '强力买入';
                     ratingEl.className = "text-5xl font-black mb-4 uppercase text-green-400";
                     signalCard.classList.add('glow-green');
                 } else if (r === 'Accumulate') {
+                    ratingEl.innerText = '定投吸筹';
                     ratingEl.className = "text-5xl font-black mb-4 uppercase text-yellow-400";
                 } else {
+                    ratingEl.innerText = '持币观望';
                     ratingEl.className = "text-5xl font-black mb-4 uppercase text-slate-500";
                 }
+                
+                document.getElementById('trigger-count').innerText = eval.triggers + ' / 8 底部指标达标';
 
                 // Altcoin logic
                 const altAction = document.getElementById('alt-action');
@@ -252,6 +356,17 @@ app.get('/', (c) => {
                 applyGlow('card-ma', eval.details.isMaTriggered);
                 applyGlow('card-fear', eval.details.isFearTriggered);
                 applyGlow('card-puell', eval.details.isPuellTriggered);
+                applyGlow('card-mvrv', eval.details.isMvrvTriggered);
+                applyGlow('card-nupl', eval.details.isNuplTriggered);
+                applyGlow('card-sopr', eval.details.isSoprTriggered);
+
+                // CBBI top or bottom glow
+                if (eval.details.isCbbiBottom) {
+                    applyGlow('card-cbbi', true);
+                } else if (eval.details.isCbbiTop) {
+                    document.getElementById('card-cbbi').classList.add('glow-red');
+                    document.getElementById('card-cbbi').querySelector('.text-2xl').classList.add('text-red-500');
+                }
 
             } catch(e) {
                 document.getElementById('loading').innerText = '网络错误';
