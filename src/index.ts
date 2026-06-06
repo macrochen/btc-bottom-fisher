@@ -244,6 +244,7 @@ app.get('/', (c) => {
                     <div class="border-l-2 border-slate-600 pl-4">
                         <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
                             <span>7. SOPR (Spent Output Profit Ratio)</span>
+                            <a href="https://charts.bgeometrics.com/dashboard_trend_dark.html" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 BGeometrics 图表</a>
                         </h4>
                         <p><span class="text-cyan-400">原理：</span>计算当日在链上转移的 BTC 相比上次移动的盈亏情况。判断抛压是止盈还是割肉。</p>
                         <p><span class="text-yellow-400">看盘指南：</span>持续 < 1 说明人们在割肉。熊市末期极佳建仓区。</p>
