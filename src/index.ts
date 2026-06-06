@@ -279,7 +279,8 @@ app.get('/', (c) => {
     <script>
         async function loadData() {
             try {
-                const res = await fetch('/api/data');
+                // Add version parameter to bypass old edge cache
+                const res = await fetch('/api/data?v=1.1');
                 const data = await res.json();
                 
                 if(data.error) {
