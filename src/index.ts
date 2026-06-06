@@ -105,19 +105,24 @@ app.get('/', (c) => {
 <body class="min-h-screen p-6">
     <div class="max-w-5xl mx-auto">
         <header class="mb-8 text-center">
-            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">BTC 黄金坑监控雷达</h1>
-            <p class="text-slate-400">八维全景共振模型 | 全自动牛熊监测雷达</p>
+            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">BTC 全景链上共振模型</h1>
+            <p class="text-slate-400">十维全景监控雷达 | 抄底与逃顶双轨引擎</p>
         </header>
 
         <div id="loading" class="text-center text-xl text-cyan-400 my-20">正在同步链上数据与市场指标...</div>
 
         <div id="dashboard" class="hidden">
             <!-- Top section: Signal & Price -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div class="cyber-card p-6 flex flex-col items-center justify-center" id="signal-card">
-                    <h2 class="text-lg text-slate-400 mb-2">终极操作建议</h2>
-                    <div id="rating" class="text-5xl font-black mb-4 uppercase">WAIT</div>
-                    <div id="trigger-count" class="text-sm px-3 py-1 bg-slate-700 rounded-full"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="cyber-card p-6 flex flex-col items-center justify-center" id="bottom-signal-card">
+                    <h2 class="text-lg text-slate-400 mb-2 flex items-center">🟢 抄底雷达</h2>
+                    <div id="bottom-rating" class="text-4xl font-black mb-4 uppercase text-slate-500">持币观望</div>
+                    <div id="bottom-trigger-count" class="text-sm px-3 py-1 bg-slate-700 rounded-full">0 / 8 底部指标达标</div>
+                </div>
+                <div class="cyber-card p-6 flex flex-col items-center justify-center" id="top-signal-card">
+                    <h2 class="text-lg text-slate-400 mb-2 flex items-center">🔴 逃顶雷达</h2>
+                    <div id="top-rating" class="text-4xl font-black mb-4 uppercase text-green-500">安全</div>
+                    <div id="top-trigger-count" class="text-sm px-3 py-1 bg-slate-700 rounded-full">0 / 6 逃顶指标触发</div>
                 </div>
                 <div class="cyber-card p-6 flex flex-col items-center justify-center">
                     <h2 class="text-lg text-slate-400 mb-2">比特币当前价格</h2>
@@ -145,25 +150,25 @@ app.get('/', (c) => {
                 <div class="cyber-card p-5" id="card-fear">
                     <div class="text-xs text-slate-400 mb-1">恐慌贪婪指数</div>
                     <div class="text-2xl font-bold mb-2" id="val-fear">--</div>
-                    <div class="text-xs">阈值: < 30 触发</div>
+                    <div class="text-xs">底部: < 30 / 顶部: > 80</div>
                 </div>
                 <!-- Puell Multiple -->
                 <div class="cyber-card p-5" id="card-puell">
                     <div class="text-xs text-slate-400 mb-1">普尔倍数 (近况)</div>
                     <div class="text-2xl font-bold mb-2" id="val-puell">--</div>
-                    <div class="text-xs">阈值: < 0.5 触发</div>
+                    <div class="text-xs">底部: < 0.5 / 顶部: > 3.0</div>
                 </div>
                 <!-- MVRV -->
                 <div class="cyber-card p-5" id="card-mvrv">
                     <div class="text-xs text-slate-400 mb-1">MVRV 估值</div>
                     <div class="text-2xl font-bold mb-2" id="val-mvrv">--</div>
-                    <div class="text-xs">阈值: < 1.0 触发</div>
+                    <div class="text-xs">底部: < 1.0 / 顶部: > 3.7</div>
                 </div>
                 <!-- NUPL -->
                 <div class="cyber-card p-5" id="card-nupl">
                     <div class="text-xs text-slate-400 mb-1">NUPL (净未实现利润)</div>
                     <div class="text-2xl font-bold mb-2" id="val-nupl">--</div>
-                    <div class="text-xs">阈值: < 0 触发</div>
+                    <div class="text-xs">底部: < 0 / 顶部: > 0.75</div>
                 </div>
                 <!-- SOPR -->
                 <div class="cyber-card p-5" id="card-sopr">
@@ -208,15 +213,15 @@ app.get('/', (c) => {
                             <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 数据源</a>
                         </h4>
                         <p><span class="text-cyan-400">原理：</span>该指数结合了波动率、市场动能、社交媒体等多种数据。巴菲特说过“别人恐惧我贪婪”。</p>
-                        <p><span class="text-yellow-400">看盘指南：</span>当指数跌破 30，市场进入人人自危的恐慌期，适合开始关注；跌破 10 则是极度恐慌的绝望期，胜率极高，必须坚决买入。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>当指数跌破 30，市场进入极度恐慌的绝望期，适合买入；反之当指数 > 80，市场极度贪婪，风险加剧，触发逃顶预警。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
                         <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
                             <span>3. 普尔倍数 (Puell Multiple)</span>
                             <a href="https://www.lookintobitcoin.com/charts/puell-multiple/" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 LookIntoBitcoin</a>
                         </h4>
-                        <p><span class="text-cyan-400">原理：</span>普尔倍数衡量的是每天比特币产出价值与过去365天平均值的比率。由于矿工有硬性的法币开支（电费、矿机），这是一个底层逻辑极强的矿工底线指标。</p>
-                        <p><span class="text-yellow-400">看盘指南：</span>当指标跌破 0.5 时，意味着全网矿工在痛苦割肉，往往对应着几十年不遇的周期大底部。</p>
+                        <p><span class="text-cyan-400">原理：</span>普尔倍数衡量的是每天比特币产出价值与过去365天平均值的比率。由于矿工有硬性的法币开支（电费、矿机），这是一个底层逻辑极强的矿工指标。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>当指标跌破 0.5 时，意味着全网矿工在痛苦割肉，往往对应周期大底；当指标 > 3.0，矿工暴利，抛压极大，往往对应历史大顶。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
                         <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
@@ -231,15 +236,15 @@ app.get('/', (c) => {
                             <span>5. MVRV 估值指标 (Market Value to Realized Value)</span>
                             <a href="https://charts.bgeometrics.com/dashboard_trend_dark.html" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 BGeometrics 图表</a>
                         </h4>
-                        <p><span class="text-cyan-400">原理：</span>衡量全网比特币当前总市值与“已实现市值”（即所有比特币最后一次移动时的价格总和）的比率。它直观反映了市场的平均浮盈/浮亏状态。</p>
-                        <p><span class="text-yellow-400">看盘指南：</span>当指标跌破 1.0 时，意味着市场整体处于“浮亏”状态，此时恐慌割肉盘涌出，属于长周期极佳的定投建仓区。</p>
+                        <p><span class="text-cyan-400">原理：</span>衡量全网比特币当前总市值与“已实现市值”的比率。它直观反映了市场的平均浮盈/浮亏状态。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>当指标 < 1.0 时，市场整体处于“浮亏”状态，属于长周期极佳定投建仓区；当指标 > 3.7 时，市场浮盈极大，泡沫随时破裂。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
                         <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
                             <span>6. NUPL (Net Unrealized Profit/Loss)</span>
                         </h4>
                         <p><span class="text-cyan-400">原理：</span>衡量全网筹码的净未实现利润与亏损状态，偏向情绪指标。</p>
-                        <p><span class="text-yellow-400">看盘指南：</span>跌破 0 意味着大面积亏损，恐慌情绪达到冰点，为熊市末期常见特征。</p>
+                        <p><span class="text-yellow-400">看盘指南：</span>跌破 0 意味着大面积亏损，恐慌情绪达到冰点；突破 0.75 意味着市场极度贪婪，进入“亢奋”状态（Euphoria），随时见顶。</p>
                     </div>
                     <div class="border-l-2 border-slate-600 pl-4">
                         <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
@@ -334,27 +339,43 @@ app.get('/', (c) => {
                 document.getElementById('update-time').innerText = new Date(data.timestamp).toLocaleString();
 
                 const eval = data.evaluation;
-                const r = eval.rating;
-                const ratingEl = document.getElementById('rating');
-                const signalCard = document.getElementById('signal-card');
                 
-                if (r === 'Top Warning') {
-                    ratingEl.innerText = '⚠️ 逃顶警告';
-                    ratingEl.className = "text-5xl font-black mb-4 uppercase text-red-500";
-                    signalCard.classList.add('glow-red');
-                } else if (r === 'Strong Buy') {
-                    ratingEl.innerText = '强力买入';
-                    ratingEl.className = "text-5xl font-black mb-4 uppercase text-green-400";
-                    signalCard.classList.add('glow-green');
-                } else if (r === 'Accumulate') {
-                    ratingEl.innerText = '定投吸筹';
-                    ratingEl.className = "text-5xl font-black mb-4 uppercase text-yellow-400";
+                // Bottom Rating
+                const bRatingEl = document.getElementById('bottom-rating');
+                const bSignalCard = document.getElementById('bottom-signal-card');
+                if (eval.bottomRating === '强力买入') {
+                    bRatingEl.innerText = '强力买入';
+                    bRatingEl.className = "text-4xl font-black mb-4 uppercase text-green-400";
+                    bSignalCard.classList.add('glow-green');
+                } else if (eval.bottomRating === '分批定投') {
+                    bRatingEl.innerText = '分批定投';
+                    bRatingEl.className = "text-4xl font-black mb-4 uppercase text-yellow-400";
+                    bSignalCard.classList.add('glow-green');
                 } else {
-                    ratingEl.innerText = '持币观望';
-                    ratingEl.className = "text-5xl font-black mb-4 uppercase text-slate-500";
+                    bRatingEl.innerText = '持币观望';
+                    bRatingEl.className = "text-4xl font-black mb-4 uppercase text-slate-500";
+                    bSignalCard.classList.remove('glow-green');
                 }
                 
-                document.getElementById('trigger-count').innerText = eval.triggers + ' / 8 底部指标达标';
+                // Top Rating
+                const tRatingEl = document.getElementById('top-rating');
+                const tSignalCard = document.getElementById('top-signal-card');
+                if (eval.topRating === '极度危险') {
+                    tRatingEl.innerText = '极度危险';
+                    tRatingEl.className = "text-4xl font-black mb-4 uppercase text-red-600";
+                    tSignalCard.classList.add('glow-red');
+                } else if (eval.topRating === '顶部预警') {
+                    tRatingEl.innerText = '顶部预警';
+                    tRatingEl.className = "text-4xl font-black mb-4 uppercase text-red-400";
+                    tSignalCard.classList.add('glow-red');
+                } else {
+                    tRatingEl.innerText = '安全';
+                    tRatingEl.className = "text-4xl font-black mb-4 uppercase text-green-500";
+                    tSignalCard.classList.remove('glow-red');
+                }
+                
+                document.getElementById('bottom-trigger-count').innerText = eval.triggers + ' / 8 底部指标达标';
+                document.getElementById('top-trigger-count').innerText = eval.topWarnings + ' / 6 逃顶指标触发';
 
                 // Altcoin logic
                 const altAction = document.getElementById('alt-action');
@@ -367,31 +388,27 @@ app.get('/', (c) => {
                 }
 
                 // Cards styling
-                const applyGlow = (id, isTriggered) => {
+                const applyGlow = (id, isBottomTriggered, isTopTriggered) => {
                     const el = document.getElementById(id);
-                    if(isTriggered) {
+                    if(isBottomTriggered) {
                         el.classList.add('glow-green');
                         el.querySelector('.text-2xl').classList.add('text-green-400');
+                    } else if (isTopTriggered) {
+                        el.classList.add('glow-red');
+                        el.querySelector('.text-2xl').classList.add('text-red-500');
                     } else {
                         el.querySelector('.text-2xl').classList.add('text-white');
                     }
                 };
 
-                applyGlow('card-rsi', eval.details.isRsiTriggered);
-                applyGlow('card-ma', eval.details.isMaTriggered);
-                applyGlow('card-fear', eval.details.isFearTriggered);
-                applyGlow('card-puell', eval.details.isPuellTriggered);
-                applyGlow('card-mvrv', eval.details.isMvrvTriggered);
-                applyGlow('card-nupl', eval.details.isNuplTriggered);
-                applyGlow('card-sopr', eval.details.isSoprTriggered);
-
-                // CBBI top or bottom glow
-                if (eval.details.isCbbiBottom) {
-                    applyGlow('card-cbbi', true);
-                } else if (eval.details.isCbbiTop) {
-                    document.getElementById('card-cbbi').classList.add('glow-red');
-                    document.getElementById('card-cbbi').querySelector('.text-2xl').classList.add('text-red-500');
-                }
+                applyGlow('card-rsi', eval.details.isRsiTriggered, false);
+                applyGlow('card-ma', eval.details.isMaTriggered, false);
+                applyGlow('card-fear', eval.details.isFearTriggered, eval.details.isFearTop);
+                applyGlow('card-puell', eval.details.isPuellTriggered, eval.details.isPuellTop);
+                applyGlow('card-mvrv', eval.details.isMvrvTriggered, eval.details.isMvrvTop);
+                applyGlow('card-nupl', eval.details.isNuplTriggered, eval.details.isNuplTop);
+                applyGlow('card-sopr', eval.details.isSoprTriggered, false);
+                applyGlow('card-cbbi', eval.details.isCbbiBottom, eval.details.isCbbiTop);
 
             } catch(e) {
                 document.getElementById('loading').innerText = '网络错误';

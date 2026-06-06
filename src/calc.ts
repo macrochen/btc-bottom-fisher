@@ -88,28 +88,51 @@ export function evaluateIndicators(data: {
   const isCbbiTop = data.cbbi !== null && data.cbbi > 80;
   if (isCbbiTop) topWarnings++;
   
+  const isMvrvTop = data.mvrv !== null && data.mvrv > 3.7;
+  if (isMvrvTop) topWarnings++;
+
+  const isNuplTop = data.nupl !== null && data.nupl > 0.75;
+  if (isNuplTop) topWarnings++;
+
+  const isFearTop = data.fearAndGreed > 80;
+  if (isFearTop) topWarnings++;
+
+  const isPuellTop = data.puellMultiple > 3.0;
+  if (isPuellTop) topWarnings++;
+  
   const isCbbiBottom = data.cbbi !== null && data.cbbi < 15;
   if (isCbbiBottom) triggers++;
 
-  let rating = "Wait";
-  if (topWarnings > 0) {
-    rating = "Top Warning";
-  } else if (triggers >= 6) {
-    rating = "Strong Buy";
+  let bottomRating = "持币观望";
+  if (triggers >= 6) {
+    bottomRating = "强力买入";
   } else if (triggers >= 4) {
-    rating = "Accumulate";
+    bottomRating = "分批定投";
+  }
+
+  let topRating = "安全";
+  if (topWarnings >= 4) {
+    topRating = "极度危险";
+  } else if (topWarnings >= 2) {
+    topRating = "顶部预警";
   }
 
   return {
     triggers,
-    rating,
+    topWarnings,
+    bottomRating,
+    topRating,
     details: {
       isRsiTriggered,
       isMaTriggered,
       isFearTriggered,
+      isFearTop,
       isPuellTriggered,
+      isPuellTop,
       isMvrvTriggered,
+      isMvrvTop,
       isNuplTriggered,
+      isNuplTop,
       isSoprTriggered,
       isPiCycleTop,
       isCbbiTop,
