@@ -106,7 +106,7 @@ app.get('/', (c) => {
     <div class="max-w-5xl mx-auto">
         <header class="mb-8 text-center">
             <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">BTC 黄金坑监控雷达</h1>
-            <p class="text-slate-400">四维共振抄底模型 | 全自动实时抓取</p>
+            <p class="text-slate-400">八维全景共振模型 | 全自动牛熊监测雷达</p>
         </header>
 
         <div id="loading" class="text-center text-xl text-cyan-400 my-20">正在同步链上数据与市场指标...</div>

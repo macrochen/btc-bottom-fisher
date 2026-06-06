@@ -94,9 +94,9 @@ export function evaluateIndicators(data: {
   let rating = "Wait";
   if (topWarnings > 0) {
     rating = "Top Warning";
-  } else if (triggers >= 5) {
+  } else if (triggers >= 6) {
     rating = "Strong Buy";
-  } else if (triggers >= 3) {
+  } else if (triggers >= 4) {
     rating = "Accumulate";
   }
 
