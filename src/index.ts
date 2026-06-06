@@ -229,6 +229,7 @@ app.get('/', (c) => {
                     <div class="border-l-2 border-slate-600 pl-4">
                         <h4 class="font-bold text-slate-100 text-base mb-1 flex items-center justify-between">
                             <span>5. MVRV 估值指标 (Market Value to Realized Value)</span>
+                            <a href="https://charts.bgeometrics.com/dashboard_trend_dark.html" target="_blank" class="text-xs text-blue-400 hover:text-blue-300 flex items-center">🔗 BGeometrics 图表</a>
                         </h4>
                         <p><span class="text-cyan-400">原理：</span>衡量全网比特币当前总市值与“已实现市值”（即所有比特币最后一次移动时的价格总和）的比率。它直观反映了市场的平均浮盈/浮亏状态。</p>
                         <p><span class="text-yellow-400">看盘指南：</span>当指标跌破 1.0 时，意味着市场整体处于“浮亏”状态，此时恐慌割肉盘涌出，属于长周期极佳的定投建仓区。</p>
