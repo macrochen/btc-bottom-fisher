@@ -286,7 +286,7 @@ app.get('/', (c) => {
         async function loadData() {
             try {
                 // Add version parameter to bypass old edge cache
-                const res = await fetch('/api/data?v=1.1');
+                const res = await fetch('/api/data?v=2.0');
                 const data = await res.json();
                 
                 if(data.error) {
