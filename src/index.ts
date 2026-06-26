@@ -139,107 +139,131 @@ app.get('/', (c) => {
             <!-- Indicators Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <!-- RSI -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-rsi">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">日线 RSI (14)</span>
-                        <span class="text-slate-500/40 font-mono">无逃顶线</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-rsi">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; 35</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-rsi">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-rsi"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">日线 RSI (14)</span>
+                            <span class="text-slate-500/40 font-mono">无逃顶线</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-rsi">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; 35</span>
+                        </div>
                     </div>
                 </div>
                 <!-- MA Deviation -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-ma">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">60日均线偏离度</span>
-                        <span class="text-slate-500/40 font-mono">无逃顶线</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-ma">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; -15%</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-ma">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-ma"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">60日均线偏离度</span>
+                            <span class="text-slate-500/40 font-mono">无逃顶线</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-ma">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; -15%</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Fear & Greed -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-fear">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">恐慌贪婪指数</span>
-                        <span class="text-red-500/80 font-mono">逃顶 &gt; 80</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-fear">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; 30</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-fear">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-fear"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">恐慌贪婪指数</span>
+                            <span class="text-red-500/80 font-mono">逃顶 &gt; 80</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-fear">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; 30</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Puell Multiple -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-puell">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">普尔倍数 (近况)</span>
-                        <span class="text-red-500/80 font-mono">逃顶 &gt; 3.0</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-puell">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; 0.5</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-puell">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-puell"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">普尔倍数 (近况)</span>
+                            <span class="text-red-500/80 font-mono">逃顶 &gt; 3.0</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-puell">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; 0.5</span>
+                        </div>
                     </div>
                 </div>
                 <!-- MVRV -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-mvrv">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">MVRV 估值</span>
-                        <span class="text-red-500/80 font-mono">逃顶 &gt; 3.7</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-mvrv">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; 1.0</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-mvrv">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-mvrv"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">MVRV 估值</span>
+                            <span class="text-red-500/80 font-mono">逃顶 &gt; 3.7</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-mvrv">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; 1.0</span>
+                        </div>
                     </div>
                 </div>
                 <!-- NUPL -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-nupl">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">NUPL (净未实现利润)</span>
-                        <span class="text-red-500/80 font-mono">逃顶 &gt; 0.75</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-nupl">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; 0</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-nupl">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-nupl"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">NUPL (净未实现利润)</span>
+                            <span class="text-red-500/80 font-mono">逃顶 &gt; 0.75</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-nupl">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; 0</span>
+                        </div>
                     </div>
                 </div>
                 <!-- SOPR -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-sopr">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">SOPR (已花费利润率)</span>
-                        <span class="text-slate-500/40 font-mono">无逃顶线</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-sopr">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; 1.0</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-sopr">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-sopr"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">SOPR (已花费利润率)</span>
+                            <span class="text-slate-500/40 font-mono">无逃顶线</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-sopr">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; 1.0</span>
+                        </div>
                     </div>
                 </div>
                 <!-- CBBI -->
-                <div class="cyber-card p-4 flex flex-col h-full" id="card-cbbi">
-                    <div class="flex justify-between items-start text-xs mb-1">
-                        <span class="text-slate-400 font-bold">CBBI 牛熊指数</span>
-                        <span class="text-red-500/80 font-mono">逃顶 &gt; 80</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center py-3">
-                        <div class="text-3xl font-bold" id="val-cbbi">--</div>
-                    </div>
-                    <div class="flex justify-end text-xs mt-1">
-                        <span class="text-green-500/80 font-mono">抄底 &lt; 15</span>
+                <div class="cyber-card p-4 flex flex-row h-full" id="card-cbbi">
+                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-cbbi"></div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div class="flex justify-between items-start text-xs mb-1">
+                            <span class="text-slate-400 font-bold">CBBI 牛熊指数</span>
+                            <span class="text-red-500/80 font-mono">逃顶 &gt; 80</span>
+                        </div>
+                        <div class="flex-grow flex items-center justify-center py-3">
+                            <div class="text-3xl font-bold" id="val-cbbi">--</div>
+                        </div>
+                        <div class="flex justify-end text-xs mt-1">
+                            <span class="text-green-500/80 font-mono">抄底 &lt; 15</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Pi Cycle Top -->
@@ -409,13 +433,11 @@ app.get('/', (c) => {
 
                 // Fill values
                 document.getElementById('btc-price').innerText = '$' + data.price.toLocaleString();
-                document.getElementById('val-rsi').innerText = data.rsi14;
-                document.getElementById('val-ma').innerText = data.ma60Deviation;
-                document.getElementById('val-fear').innerText = data.fearAndGreed;
-                document.getElementById('val-puell').innerText = data.puellMultiple;
+                
                 // helper to elegantly show error: normal users see "--", devs can hover for error info
                 function renderValueOrError(id, valStr) {
                     const el = document.getElementById(id);
+                    if (!el) return;
                     if (valStr && valStr.toString().startsWith('Err:')) {
                         let rawErr = valStr.toString().replace('Err: ', '');
                         let displayErr = rawErr;
@@ -433,12 +455,57 @@ app.get('/', (c) => {
                         el.innerText = valStr;
                     }
                 }
+                
+                function renderThermometer(id, valStr, min, max, bottomThreshold, topThreshold) {
+                    const container = document.getElementById(id);
+                    if (!container) return;
+                    
+                    const val = parseFloat(valStr);
+                    if (isNaN(val) || (valStr && valStr.toString().startsWith('Err:'))) {
+                        container.innerHTML = '';
+                        return;
+                    }
+                    
+                    let clampedVal = Math.max(min, Math.min(max, val));
+                    let valPercent = ((clampedVal - min) / (max - min)) * 100;
+                    
+                    let bottomPercent = bottomThreshold !== null ? ((bottomThreshold - min) / (max - min)) * 100 : 0;
+                    let topPercent = topThreshold !== null ? ((max - topThreshold) / (max - min)) * 100 : 0;
+                    
+                    container.innerHTML = `
+                        <!-- Safe Bottom Zone -->
+                        ${bottomThreshold !== null ? \`<div class="absolute bottom-0 left-0 w-full bg-green-500/40" style="height: \${bottomPercent}%"></div>\` : ''}
+                        <!-- Danger Top Zone -->
+                        ${topThreshold !== null ? \`<div class="absolute top-0 left-0 w-full bg-red-500/40" style="height: \${topPercent}%"></div>\` : ''}
+                        <!-- Value trail -->
+                        <div class="absolute bottom-0 left-0 w-full bg-slate-500/50" style="height: \${valPercent}%"></div>
+                        <!-- Current Value Cursor -->
+                        <div class="absolute left-1/2 -translate-x-1/2 w-3 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)] rounded-sm z-10" style="bottom: \${valPercent}%"></div>
+                    `;
+                    container.classList.remove('hidden');
+                }
 
+                renderValueOrError('val-rsi', data.rsi14);
+                renderValueOrError('val-ma', data.ma60Deviation);
+                renderValueOrError('val-fear', data.fearAndGreed);
+                renderValueOrError('val-puell', data.puellMultiple);
                 renderValueOrError('val-mvrv', data.mvrv);
                 renderValueOrError('val-nupl', data.nupl);
                 renderValueOrError('val-sopr', data.sopr);
-                document.getElementById('val-cbbi').innerText = data.cbbi;
-                document.getElementById('val-pi').innerText = data.piCycleTriggered ? '⚠️ 极度危险' : '安全';
+                renderValueOrError('val-cbbi', data.cbbi);
+                
+                // Render thermometers
+                renderThermometer('thermo-rsi', data.rsi14, 10, 90, 35, null);
+                renderThermometer('thermo-ma', data.ma60Deviation?.replace('%', ''), -30, 30, -15, null);
+                renderThermometer('thermo-fear', data.fearAndGreed, 0, 100, 30, 80);
+                renderThermometer('thermo-puell', data.puellMultiple, 0, 4.0, 0.5, 3.0);
+                renderThermometer('thermo-mvrv', data.mvrv, 0, 5.0, 1.0, 3.7);
+                renderThermometer('thermo-nupl', data.nupl, -0.2, 1.0, 0, 0.75);
+                renderThermometer('thermo-sopr', data.sopr, 0.8, 1.2, 1.0, null);
+                renderThermometer('thermo-cbbi', data.cbbi, 0, 100, 15, 80);
+
+                const piEl = document.getElementById('val-pi');
+                if (piEl) piEl.innerText = data.piCycleTriggered ? '⚠️ 危险' : '安全';
                 if (data.piCycleTriggered) {
                     document.getElementById('val-pi').classList.replace('text-white', 'text-red-500');
                     document.getElementById('card-pi').classList.add('glow-red');
