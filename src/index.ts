@@ -490,7 +490,7 @@ app.get('/', (c) => {
                             '<div class="absolute bottom-0 left-0 w-full bg-gradient-to-t ' + fillColor + ' opacity-80 transition-all duration-1000" style="height: ' + valPercent + '%"></div>' +
                         '</div>' +
                         '<!-- Current Value Cursor -->' +
-                        '<div class="absolute w-8 h-1 bg-white shadow-[0_0_10px_rgba(255,255,255,1)] rounded-full z-10 transition-all duration-1000 -left-2" style="bottom: ' + valPercent + '%; transform: translateY(50%);"></div>';
+                        '<div class="absolute w-5 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)] rounded-full z-10 transition-all duration-1000 left-1/2 -translate-x-1/2" style="bottom: ' + valPercent + '%; transform: translate(-50%, 50%);"></div>';
                     container.classList.remove('hidden');
                 }
 
