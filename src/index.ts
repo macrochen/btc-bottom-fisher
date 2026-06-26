@@ -472,16 +472,18 @@ app.get('/', (c) => {
                     let bottomPercent = bottomThreshold !== null ? ((bottomThreshold - min) / (max - min)) * 100 : 0;
                     let topPercent = topThreshold !== null ? ((max - topThreshold) / (max - min)) * 100 : 0;
                     
-                    container.innerHTML = `
-                        <!-- Safe Bottom Zone -->
-                        ${bottomThreshold !== null ? \`<div class="absolute bottom-0 left-0 w-full bg-green-500/40" style="height: \${bottomPercent}%"></div>\` : ''}
-                        <!-- Danger Top Zone -->
-                        ${topThreshold !== null ? \`<div class="absolute top-0 left-0 w-full bg-red-500/40" style="height: \${topPercent}%"></div>\` : ''}
-                        <!-- Value trail -->
-                        <div class="absolute bottom-0 left-0 w-full bg-slate-500/50" style="height: \${valPercent}%"></div>
-                        <!-- Current Value Cursor -->
-                        <div class="absolute left-1/2 -translate-x-1/2 w-3 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)] rounded-sm z-10" style="bottom: \${valPercent}%"></div>
-                    `;
+                    let bottomHTML = bottomThreshold !== null ? '<div class="absolute bottom-0 left-0 w-full bg-green-500/40" style="height: ' + bottomPercent + '%"></div>' : '';
+                    let topHTML = topThreshold !== null ? '<div class="absolute top-0 left-0 w-full bg-red-500/40" style="height: ' + topPercent + '%"></div>' : '';
+
+                    container.innerHTML = 
+                        '<!-- Safe Bottom Zone -->' +
+                        bottomHTML +
+                        '<!-- Danger Top Zone -->' +
+                        topHTML +
+                        '<!-- Value trail -->' +
+                        '<div class="absolute bottom-0 left-0 w-full bg-slate-500/50" style="height: ' + valPercent + '%"></div>' +
+                        '<!-- Current Value Cursor -->' +
+                        '<div class="absolute left-1/2 -translate-x-1/2 w-3 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)] rounded-sm z-10" style="bottom: ' + valPercent + '%"></div>';
                     container.classList.remove('hidden');
                 }
 
