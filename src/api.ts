@@ -64,52 +64,53 @@ export async function fetchAltcoinSeasonIndex(btc90dReturn: number) {
   return Math.round((beatBtcCount / totalCount) * 100);
 }
 
-export async function fetchMvrv(apiKey?: string) {
-  if (!apiKey) return null;
+export async function fetchMvrv(apiKey?: string): Promise<{val: number | null, err: string | null}> {
+  if (!apiKey) return { val: null, err: 'API_KEY Missing' };
   try {
     const res = await fetch(`https://api.bgeometrics.com/v1/mvrv?api_key=${apiKey}`);
-    if (!res.ok) throw new Error(`BGeometrics API error: ${res.status}`);
+    if (!res.ok) return { val: null, err: `HTTP ${res.status}` };
     const data = await res.json() as any[];
     if (data && data.length > 0) {
-      // BGeometrics returns array of { d: '2022-06-06', unixTs: 1654473600, mvrv: 1.3394 }
-      // Get the latest one
       const latest = data[data.length - 1];
-      return latest.mvrv as number;
+      return { val: latest.mvrv as number, err: null };
     }
-  } catch (e) {
+  } catch (e: any) {
     console.warn('Failed to fetch MVRV:', e);
+    return { val: null, err: e.message };
   }
-  return null;
+  return { val: null, err: 'Empty Data' };
 }
 
-export async function fetchNupl(apiKey?: string) {
-  if (!apiKey) return null;
+export async function fetchNupl(apiKey?: string): Promise<{val: number | null, err: string | null}> {
+  if (!apiKey) return { val: null, err: 'API_KEY Missing' };
   try {
     const res = await fetch(`https://api.bgeometrics.com/v1/nupl?api_key=${apiKey}`);
-    if (!res.ok) throw new Error(`BGeometrics NUPL error: ${res.status}`);
+    if (!res.ok) return { val: null, err: `HTTP ${res.status}` };
     const data = await res.json() as any[];
     if (data && data.length > 0) {
-      return data[data.length - 1].nupl as number;
+      return { val: data[data.length - 1].nupl as number, err: null };
     }
-  } catch (e) {
+  } catch (e: any) {
     console.warn('Failed to fetch NUPL:', e);
+    return { val: null, err: e.message };
   }
-  return null;
+  return { val: null, err: 'Empty Data' };
 }
 
-export async function fetchSopr(apiKey?: string) {
-  if (!apiKey) return null;
+export async function fetchSopr(apiKey?: string): Promise<{val: number | null, err: string | null}> {
+  if (!apiKey) return { val: null, err: 'API_KEY Missing' };
   try {
     const res = await fetch(`https://api.bgeometrics.com/v1/sopr?api_key=${apiKey}`);
-    if (!res.ok) throw new Error(`BGeometrics SOPR error: ${res.status}`);
+    if (!res.ok) return { val: null, err: `HTTP ${res.status}` };
     const data = await res.json() as any[];
     if (data && data.length > 0) {
-      return data[data.length - 1].sopr as number;
+      return { val: data[data.length - 1].sopr as number, err: null };
     }
-  } catch (e) {
+  } catch (e: any) {
     console.warn('Failed to fetch SOPR:', e);
+    return { val: null, err: e.message };
   }
-  return null;
+  return { val: null, err: 'Empty Data' };
 }
 
 export async function fetchCBBI() {

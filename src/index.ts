@@ -10,7 +10,7 @@ app.get('/api/data', async (c) => {
     const bgeometricsKey = env?.BGEOMETRICS_API_KEY || '';
 
     // 1. Fetch data
-    const [btc90d, fearAndGreed, btc365d, mvrv, nupl, sopr, cbbi] = await Promise.all([
+    const [btc90d, fearAndGreed, btc365d, mvrvRes, nuplRes, soprRes, cbbi] = await Promise.all([
       fetchMexcKlines('BTCUSDT', '1d', 90),
       fetchFearAndGreed(),
       fetchCoinGeckoBTC365d(),
@@ -19,6 +19,10 @@ app.get('/api/data', async (c) => {
       fetchSopr(bgeometricsKey),
       fetchCBBI()
     ]);
+
+    const mvrv = mvrvRes.val;
+    const nupl = nuplRes.val;
+    const sopr = soprRes.val;
 
     const currentPrice = btc90d[btc90d.length - 1];
 
@@ -67,9 +71,9 @@ app.get('/api/data', async (c) => {
       ma60Deviation: (ma60Deviation * 100).toFixed(2) + '%',
       fearAndGreed,
       puellMultiple: puellMultiple.toFixed(2),
-      mvrv: mvrv !== null ? mvrv.toFixed(2) : '--',
-      nupl: nupl !== null ? nupl.toFixed(2) : '--',
-      sopr: sopr !== null ? sopr.toFixed(2) : '--',
+      mvrv: mvrv !== null ? mvrv.toFixed(2) : (mvrvRes.err ? `Err: ${mvrvRes.err}` : '--'),
+      nupl: nupl !== null ? nupl.toFixed(2) : (nuplRes.err ? `Err: ${nuplRes.err}` : '--'),
+      sopr: sopr !== null ? sopr.toFixed(2) : (soprRes.err ? `Err: ${soprRes.err}` : '--'),
       cbbi: cbbi !== null ? cbbi : '--',
       piCycleTriggered: evaluation.details.isPiCycleTop,
       altcoinSeasonIndex,
@@ -286,7 +290,7 @@ app.get('/', (c) => {
         async function loadData() {
             try {
                 // Add version parameter to bypass old edge cache
-                const res = await fetch('/api/data?v=2.0');
+                const res = await fetch('/api/data?v=3.0');
                 const data = await res.json();
                 
                 if(data.error) {
@@ -325,9 +329,20 @@ app.get('/', (c) => {
                 document.getElementById('val-ma').innerText = data.ma60Deviation;
                 document.getElementById('val-fear').innerText = data.fearAndGreed;
                 document.getElementById('val-puell').innerText = data.puellMultiple;
-                document.getElementById('val-mvrv').innerText = data.mvrv;
-                document.getElementById('val-nupl').innerText = data.nupl;
-                document.getElementById('val-sopr').innerText = data.sopr;
+                // helper to adjust font size if value is an error
+                function setValWithAutoFontSize(id, valStr) {
+                    const el = document.getElementById(id);
+                    el.innerText = valStr;
+                    if (valStr.toString().startsWith('Err:')) {
+                        el.classList.replace('text-3xl', 'text-lg');
+                        el.classList.replace('font-bold', 'font-medium');
+                        el.classList.add('text-red-400');
+                    }
+                }
+
+                setValWithAutoFontSize('val-mvrv', data.mvrv);
+                setValWithAutoFontSize('val-nupl', data.nupl);
+                setValWithAutoFontSize('val-sopr', data.sopr);
                 document.getElementById('val-cbbi').innerText = data.cbbi;
                 document.getElementById('val-pi').innerText = data.piCycleTriggered ? '⚠️ 极度危险' : '安全';
                 if (data.piCycleTriggered) {
