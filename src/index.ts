@@ -333,7 +333,12 @@ app.get('/', (c) => {
                 function renderValueOrError(id, valStr) {
                     const el = document.getElementById(id);
                     if (valStr && valStr.toString().startsWith('Err:')) {
-                        el.innerHTML = '-- <span class="text-sm text-red-500/80 font-normal ml-2 cursor-help" title="Developer Info: ' + valStr + '">⚠️</span>';
+                        el.innerHTML = '-- ' +
+                            '<div class="relative inline-block group ml-2">' +
+                            '<span class="text-sm text-red-500/80 font-normal cursor-help">⚠️</span>' +
+                            '<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-max max-w-xs bg-slate-800 text-slate-200 text-xs rounded py-1 px-2 border border-slate-600 shadow-lg z-50">' +
+                            'Developer Info: ' + valStr +
+                            '</div></div>';
                     } else {
                         el.innerText = valStr;
                     }
