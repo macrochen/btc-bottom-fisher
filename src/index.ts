@@ -320,6 +320,27 @@ app.get('/', (c) => {
                     }
                 }
 
+                // Client-side BGeometrics fallback (if Cloudflare Worker was rate-limited)
+                async function fallbackBGeometrics(key, url, formatter) {
+                    if (data[key] && data[key].toString().startsWith('Err:')) {
+                        try {
+                            const res = await fetch(url);
+                            if (res.ok) {
+                                const list = await res.json();
+                                if (list && list.length > 0) {
+                                    data[key] = formatter(list[list.length - 1]);
+                                }
+                            }
+                        } catch(e) {
+                            console.error(`Frontend ${key} fetch failed`, e);
+                        }
+                    }
+                }
+                
+                await fallbackBGeometrics('mvrv', 'https://api.bgeometrics.com/v1/mvrv', item => item.mvrv.toFixed(2));
+                await fallbackBGeometrics('nupl', 'https://api.bgeometrics.com/v1/nupl', item => item.nupl.toFixed(2));
+                await fallbackBGeometrics('sopr', 'https://api.bgeometrics.com/v1/sopr', item => item.sopr.toFixed(2));
+
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('dashboard').classList.remove('hidden');
 
