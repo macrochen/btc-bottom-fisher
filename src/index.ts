@@ -142,77 +142,135 @@ app.get('/', (c) => {
                 <div class="cyber-card p-5" id="card-rsi">
                     <div class="text-xs text-slate-400 mb-1">日线 RSI (14)</div>
                     <div class="text-2xl font-bold mb-2" id="val-rsi">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; 35</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center opacity-40">
+                            <span class="text-slate-400">逃顶线</span>
+                            <span class="text-slate-400 font-mono">无</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; 35</span>
+                        </div>
                     </div>
                 </div>
                 <!-- MA Deviation -->
                 <div class="cyber-card p-5" id="card-ma">
                     <div class="text-xs text-slate-400 mb-1">60日均线偏离度</div>
                     <div class="text-2xl font-bold mb-2" id="val-ma">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; -15%</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center opacity-40">
+                            <span class="text-slate-400">逃顶线</span>
+                            <span class="text-slate-400 font-mono">无</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; -15%</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Fear & Greed -->
                 <div class="cyber-card p-5" id="card-fear">
                     <div class="text-xs text-slate-400 mb-1">恐慌贪婪指数</div>
                     <div class="text-2xl font-bold mb-2" id="val-fear">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; 30</span>
-                        <span class="text-red-500/80">逃顶 &gt; 80</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-500/80">逃顶线</span>
+                            <span class="text-red-400 font-mono">&gt; 80</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; 30</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Puell Multiple -->
                 <div class="cyber-card p-5" id="card-puell">
                     <div class="text-xs text-slate-400 mb-1">普尔倍数 (近况)</div>
                     <div class="text-2xl font-bold mb-2" id="val-puell">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; 0.5</span>
-                        <span class="text-red-500/80">逃顶 &gt; 3.0</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-500/80">逃顶线</span>
+                            <span class="text-red-400 font-mono">&gt; 3.0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; 0.5</span>
+                        </div>
                     </div>
                 </div>
                 <!-- MVRV -->
                 <div class="cyber-card p-5" id="card-mvrv">
                     <div class="text-xs text-slate-400 mb-1">MVRV 估值</div>
                     <div class="text-2xl font-bold mb-2" id="val-mvrv">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; 1.0</span>
-                        <span class="text-red-500/80">逃顶 &gt; 3.7</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-500/80">逃顶线</span>
+                            <span class="text-red-400 font-mono">&gt; 3.7</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; 1.0</span>
+                        </div>
                     </div>
                 </div>
                 <!-- NUPL -->
                 <div class="cyber-card p-5" id="card-nupl">
                     <div class="text-xs text-slate-400 mb-1">NUPL (净未实现利润)</div>
                     <div class="text-2xl font-bold mb-2" id="val-nupl">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; 0</span>
-                        <span class="text-red-500/80">逃顶 &gt; 0.75</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-500/80">逃顶线</span>
+                            <span class="text-red-400 font-mono">&gt; 0.75</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; 0</span>
+                        </div>
                     </div>
                 </div>
                 <!-- SOPR -->
                 <div class="cyber-card p-5" id="card-sopr">
                     <div class="text-xs text-slate-400 mb-1">SOPR (已花费输出利润率)</div>
                     <div class="text-2xl font-bold mb-2" id="val-sopr">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; 1.0</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center opacity-40">
+                            <span class="text-slate-400">逃顶线</span>
+                            <span class="text-slate-400 font-mono">无</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; 1.0</span>
+                        </div>
                     </div>
                 </div>
                 <!-- CBBI -->
                 <div class="cyber-card p-5" id="card-cbbi">
                     <div class="text-xs text-slate-400 mb-1">CBBI 牛熊指数</div>
                     <div class="text-2xl font-bold mb-2" id="val-cbbi">--</div>
-                    <div class="text-xs flex justify-between mt-1">
-                        <span class="text-green-500/80">抄底 &lt; 15</span>
-                        <span class="text-red-500/80">逃顶 &gt; 80</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-500/80">逃顶线</span>
+                            <span class="text-red-400 font-mono">&gt; 80</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-500/80">抄底线</span>
+                            <span class="text-green-400 font-mono">&lt; 15</span>
+                        </div>
                     </div>
                 </div>
                 <!-- Pi Cycle Top -->
                 <div class="cyber-card p-5" id="card-pi">
                     <div class="text-xs text-slate-400 mb-1">Pi Cycle Top 预警</div>
                     <div class="text-2xl font-bold mb-2" id="val-pi">安全</div>
-                    <div class="text-xs flex justify-end mt-1">
-                        <span class="text-red-500/80">交叉即逃顶</span>
+                    <div class="text-xs flex flex-col mt-2 space-y-1 pt-2 border-t border-slate-700/50">
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-500/80">逃顶线</span>
+                            <span class="text-red-400 font-mono">均线交叉</span>
+                        </div>
+                        <div class="flex justify-between items-center opacity-40">
+                            <span class="text-slate-400">抄底线</span>
+                            <span class="text-slate-400 font-mono">无</span>
+                        </div>
                     </div>
                 </div>
             </div>
