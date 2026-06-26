@@ -332,7 +332,7 @@ app.get('/', (c) => {
                                 }
                             }
                         } catch(e) {
-                            console.error(`Frontend ${key} fetch failed`, e);
+                            console.error('Frontend ' + key + ' fetch failed', e);
                         }
                     }
                 }
