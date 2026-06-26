@@ -142,55 +142,78 @@ app.get('/', (c) => {
                 <div class="cyber-card p-5" id="card-rsi">
                     <div class="text-xs text-slate-400 mb-1">日线 RSI (14)</div>
                     <div class="text-2xl font-bold mb-2" id="val-rsi">--</div>
-                    <div class="text-xs">阈值: < 35 触发</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; 35</span>
+                    </div>
                 </div>
                 <!-- MA Deviation -->
                 <div class="cyber-card p-5" id="card-ma">
                     <div class="text-xs text-slate-400 mb-1">60日均线偏离度</div>
                     <div class="text-2xl font-bold mb-2" id="val-ma">--</div>
-                    <div class="text-xs">阈值: < -15% 触发</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; -15%</span>
+                    </div>
                 </div>
                 <!-- Fear & Greed -->
                 <div class="cyber-card p-5" id="card-fear">
                     <div class="text-xs text-slate-400 mb-1">恐慌贪婪指数</div>
                     <div class="text-2xl font-bold mb-2" id="val-fear">--</div>
-                    <div class="text-xs">底部: < 30 / 顶部: > 80</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; 30</span>
+                        <span class="text-red-500/80">逃顶 &gt; 80</span>
+                    </div>
                 </div>
                 <!-- Puell Multiple -->
                 <div class="cyber-card p-5" id="card-puell">
                     <div class="text-xs text-slate-400 mb-1">普尔倍数 (近况)</div>
                     <div class="text-2xl font-bold mb-2" id="val-puell">--</div>
-                    <div class="text-xs">底部: < 0.5 / 顶部: > 3.0</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; 0.5</span>
+                        <span class="text-red-500/80">逃顶 &gt; 3.0</span>
+                    </div>
                 </div>
                 <!-- MVRV -->
                 <div class="cyber-card p-5" id="card-mvrv">
                     <div class="text-xs text-slate-400 mb-1">MVRV 估值</div>
                     <div class="text-2xl font-bold mb-2" id="val-mvrv">--</div>
-                    <div class="text-xs">底部: < 1.0 / 顶部: > 3.7</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; 1.0</span>
+                        <span class="text-red-500/80">逃顶 &gt; 3.7</span>
+                    </div>
                 </div>
                 <!-- NUPL -->
                 <div class="cyber-card p-5" id="card-nupl">
                     <div class="text-xs text-slate-400 mb-1">NUPL (净未实现利润)</div>
                     <div class="text-2xl font-bold mb-2" id="val-nupl">--</div>
-                    <div class="text-xs">底部: < 0 / 顶部: > 0.75</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; 0</span>
+                        <span class="text-red-500/80">逃顶 &gt; 0.75</span>
+                    </div>
                 </div>
                 <!-- SOPR -->
                 <div class="cyber-card p-5" id="card-sopr">
                     <div class="text-xs text-slate-400 mb-1">SOPR (已花费输出利润率)</div>
                     <div class="text-2xl font-bold mb-2" id="val-sopr">--</div>
-                    <div class="text-xs">阈值: < 1.0 触发</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; 1.0</span>
+                    </div>
                 </div>
                 <!-- CBBI -->
                 <div class="cyber-card p-5" id="card-cbbi">
                     <div class="text-xs text-slate-400 mb-1">CBBI 牛熊指数</div>
                     <div class="text-2xl font-bold mb-2" id="val-cbbi">--</div>
-                    <div class="text-xs">底部: < 15 / 顶部: > 80</div>
+                    <div class="text-xs flex justify-between mt-1">
+                        <span class="text-green-500/80">抄底 &lt; 15</span>
+                        <span class="text-red-500/80">逃顶 &gt; 80</span>
+                    </div>
                 </div>
                 <!-- Pi Cycle Top -->
                 <div class="cyber-card p-5" id="card-pi">
                     <div class="text-xs text-slate-400 mb-1">Pi Cycle Top 预警</div>
                     <div class="text-2xl font-bold mb-2" id="val-pi">安全</div>
-                    <div class="text-xs">111DMA > 350DMA×2 时告警</div>
+                    <div class="text-xs flex justify-end mt-1">
+                        <span class="text-red-500/80">交叉即逃顶</span>
+                    </div>
                 </div>
             </div>
             
