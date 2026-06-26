@@ -333,7 +333,7 @@ app.get('/', (c) => {
                 function renderValueOrError(id, valStr) {
                     const el = document.getElementById(id);
                     if (valStr && valStr.toString().startsWith('Err:')) {
-                        el.innerHTML = `-- <span class="text-sm text-red-500/80 font-normal ml-2 cursor-help" title="Developer Info: ${valStr}">⚠️</span>`;
+                        el.innerHTML = '-- <span class="text-sm text-red-500/80 font-normal ml-2 cursor-help" title="Developer Info: ' + valStr + '">⚠️</span>';
                     } else {
                         el.innerText = valStr;
                     }
