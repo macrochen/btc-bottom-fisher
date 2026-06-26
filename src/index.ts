@@ -329,20 +329,19 @@ app.get('/', (c) => {
                 document.getElementById('val-ma').innerText = data.ma60Deviation;
                 document.getElementById('val-fear').innerText = data.fearAndGreed;
                 document.getElementById('val-puell').innerText = data.puellMultiple;
-                // helper to adjust font size if value is an error
-                function setValWithAutoFontSize(id, valStr) {
+                // helper to elegantly show error: normal users see "--", devs can hover for error info
+                function renderValueOrError(id, valStr) {
                     const el = document.getElementById(id);
-                    el.innerText = valStr;
-                    if (valStr.toString().startsWith('Err:')) {
-                        el.classList.replace('text-3xl', 'text-lg');
-                        el.classList.replace('font-bold', 'font-medium');
-                        el.classList.add('text-red-400');
+                    if (valStr && valStr.toString().startsWith('Err:')) {
+                        el.innerHTML = `-- <span class="text-sm text-red-500/80 font-normal ml-2 cursor-help" title="Developer Info: ${valStr}">⚠️</span>`;
+                    } else {
+                        el.innerText = valStr;
                     }
                 }
 
-                setValWithAutoFontSize('val-mvrv', data.mvrv);
-                setValWithAutoFontSize('val-nupl', data.nupl);
-                setValWithAutoFontSize('val-sopr', data.sopr);
+                renderValueOrError('val-mvrv', data.mvrv);
+                renderValueOrError('val-nupl', data.nupl);
+                renderValueOrError('val-sopr', data.sopr);
                 document.getElementById('val-cbbi').innerText = data.cbbi;
                 document.getElementById('val-pi').innerText = data.piCycleTriggered ? '⚠️ 极度危险' : '安全';
                 if (data.piCycleTriggered) {
