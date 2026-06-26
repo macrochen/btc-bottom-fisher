@@ -140,7 +140,7 @@ app.get('/', (c) => {
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <!-- RSI -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-rsi">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-rsi"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-rsi"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">日线 RSI (14)</span>
@@ -156,7 +156,7 @@ app.get('/', (c) => {
                 </div>
                 <!-- MA Deviation -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-ma">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-ma"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-ma"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">60日均线偏离度</span>
@@ -172,7 +172,7 @@ app.get('/', (c) => {
                 </div>
                 <!-- Fear & Greed -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-fear">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-fear"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-fear"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">恐慌贪婪指数</span>
@@ -188,7 +188,7 @@ app.get('/', (c) => {
                 </div>
                 <!-- Puell Multiple -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-puell">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-puell"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-puell"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">普尔倍数 (近况)</span>
@@ -204,7 +204,7 @@ app.get('/', (c) => {
                 </div>
                 <!-- MVRV -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-mvrv">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-mvrv"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-mvrv"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">MVRV 估值</span>
@@ -220,7 +220,7 @@ app.get('/', (c) => {
                 </div>
                 <!-- NUPL -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-nupl">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-nupl"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-nupl"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">NUPL (净未实现利润)</span>
@@ -236,7 +236,7 @@ app.get('/', (c) => {
                 </div>
                 <!-- SOPR -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-sopr">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-sopr"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-sopr"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">SOPR (已花费利润率)</span>
@@ -252,7 +252,7 @@ app.get('/', (c) => {
                 </div>
                 <!-- CBBI -->
                 <div class="cyber-card p-4 flex flex-row h-full" id="card-cbbi">
-                    <div class="w-1.5 h-full bg-slate-800/80 rounded-full relative mr-3 flex-shrink-0 border border-slate-700/50 overflow-hidden" id="thermo-cbbi"></div>
+                    <div class="w-4 h-full bg-slate-900 rounded-full relative mr-4 flex-shrink-0 border border-slate-700 shadow-inner" id="thermo-cbbi"></div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div class="flex justify-between items-start text-xs mb-1">
                             <span class="text-slate-400 font-bold">CBBI 牛熊指数</span>
@@ -472,18 +472,25 @@ app.get('/', (c) => {
                     let bottomPercent = bottomThreshold !== null ? ((bottomThreshold - min) / (max - min)) * 100 : 0;
                     let topPercent = topThreshold !== null ? ((max - topThreshold) / (max - min)) * 100 : 0;
                     
-                    let bottomHTML = bottomThreshold !== null ? '<div class="absolute bottom-0 left-0 w-full bg-green-500/40" style="height: ' + bottomPercent + '%"></div>' : '';
-                    let topHTML = topThreshold !== null ? '<div class="absolute top-0 left-0 w-full bg-red-500/40" style="height: ' + topPercent + '%"></div>' : '';
+                    let bottomHTML = bottomThreshold !== null ? '<div class="absolute bottom-0 left-0 w-full bg-green-500/30" style="height: ' + bottomPercent + '%"></div>' : '';
+                    let topHTML = topThreshold !== null ? '<div class="absolute top-0 left-0 w-full bg-red-500/30" style="height: ' + topPercent + '%"></div>' : '';
+
+                    let fillColor = 'from-slate-500 to-slate-400';
+                    if (bottomPercent > 0 && valPercent <= bottomPercent) fillColor = 'from-green-500 to-green-400';
+                    else if (topPercent > 0 && valPercent >= (100 - topPercent)) fillColor = 'from-red-500 to-red-400';
+                    else if (bottomPercent === 0 && topPercent === 0) fillColor = 'from-cyan-500 to-blue-500'; // fallback if no thresholds
 
                     container.innerHTML = 
-                        '<!-- Safe Bottom Zone -->' +
-                        bottomHTML +
-                        '<!-- Danger Top Zone -->' +
-                        topHTML +
-                        '<!-- Value trail -->' +
-                        '<div class="absolute bottom-0 left-0 w-full bg-slate-500/50" style="height: ' + valPercent + '%"></div>' +
+                        '<div class="absolute inset-0 rounded-full overflow-hidden">' +
+                            '<!-- Safe Bottom Zone -->' +
+                            bottomHTML +
+                            '<!-- Danger Top Zone -->' +
+                            topHTML +
+                            '<!-- Value trail -->' +
+                            '<div class="absolute bottom-0 left-0 w-full bg-gradient-to-t ' + fillColor + ' opacity-80 transition-all duration-1000" style="height: ' + valPercent + '%"></div>' +
+                        '</div>' +
                         '<!-- Current Value Cursor -->' +
-                        '<div class="absolute left-1/2 -translate-x-1/2 w-3 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)] rounded-sm z-10" style="bottom: ' + valPercent + '%"></div>';
+                        '<div class="absolute w-8 h-1 bg-white shadow-[0_0_10px_rgba(255,255,255,1)] rounded-full z-10 transition-all duration-1000 -left-2" style="bottom: ' + valPercent + '%; transform: translateY(50%);"></div>';
                     container.classList.remove('hidden');
                 }
 
