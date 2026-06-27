@@ -572,7 +572,7 @@ app.get('/', (c) => {
                 document.getElementById('alt-season').innerText = '山寨季指数 (前20): ' + data.altcoinSeasonIndex;
                 document.getElementById('update-time').innerText = new Date(data.timestamp).toLocaleString();
 
-                const eval = data.evaluation;
+
                 
                 // Bottom Rating
                 const bRatingEl = document.getElementById('bottom-rating');
