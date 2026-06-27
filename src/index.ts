@@ -104,6 +104,7 @@ app.get('/', (c) => {
         .cyber-card { background: rgba(30, 41, 59, 0.7); border: 1px solid #334155; backdrop-filter: blur(10px); border-radius: 12px; }
         .glow-green { box-shadow: 0 0 15px rgba(34, 197, 94, 0.5); border-color: #22c55e; }
         .glow-red { box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); border-color: #ef4444; }
+        .glow-green { box-shadow: 0 0 15px rgba(34, 197, 94, 0.5); border-color: #22c55e; }
     </style>
 </head>
 <body class="min-h-screen p-6">
@@ -492,6 +493,23 @@ app.get('/', (c) => {
                         '<!-- Current Value Cursor -->' +
                         '<div class="absolute w-5 h-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)] rounded-full z-10 transition-all duration-1000 left-1/2 -translate-x-1/2" style="bottom: ' + valPercent + '%; transform: translate(-50%, 50%);"></div>';
                     container.classList.remove('hidden');
+
+                    const isBottomTriggered = bottomThreshold !== null && val <= bottomThreshold;
+                    const isTopTriggered = topThreshold !== null && val >= topThreshold;
+                    
+                    const valEl = document.getElementById(id.replace('thermo-', 'val-'));
+                    if (valEl) {
+                        valEl.classList.remove('text-green-500', 'text-red-500');
+                        if (isBottomTriggered) valEl.classList.add('text-green-500');
+                        else if (isTopTriggered) valEl.classList.add('text-red-500');
+                    }
+                    
+                    const cardEl = document.getElementById(id.replace('thermo-', 'card-'));
+                    if (cardEl) {
+                        cardEl.classList.remove('glow-green', 'glow-red');
+                        if (isBottomTriggered) cardEl.classList.add('glow-green');
+                        else if (isTopTriggered) cardEl.classList.add('glow-red');
+                    }
                 }
 
                 renderValueOrError('val-rsi', data.rsi14);
