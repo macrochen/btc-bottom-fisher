@@ -428,6 +428,37 @@ app.get('/', (c) => {
                 await fallbackBGeometrics('mvrv', 'https://api.bgeometrics.com/v1/mvrv', item => item.mvrv.toFixed(2));
                 await fallbackBGeometrics('nupl', 'https://api.bgeometrics.com/v1/nupl', item => item.nupl.toFixed(2));
                 await fallbackBGeometrics('sopr', 'https://api.bgeometrics.com/v1/sopr', item => item.sopr.toFixed(2));
+                
+                // Re-evaluate counts because frontend fallbacks might have updated the data
+                const eval = data.evaluation;
+                let finalBottomTriggers = 0;
+                let finalTopWarnings = 0;
+                
+                if (parseFloat(data.rsi14) < 35) finalBottomTriggers++;
+                if (parseFloat(data.ma60Deviation) < -15) finalBottomTriggers++;
+                if (parseFloat(data.fearAndGreed) < 30) finalBottomTriggers++;
+                if (parseFloat(data.puellMultiple) < 0.5) finalBottomTriggers++;
+                if (!isNaN(parseFloat(data.mvrv)) && parseFloat(data.mvrv) < 1.0) finalBottomTriggers++;
+                if (!isNaN(parseFloat(data.nupl)) && parseFloat(data.nupl) < 0) finalBottomTriggers++;
+                if (!isNaN(parseFloat(data.sopr)) && parseFloat(data.sopr) < 1.0) finalBottomTriggers++;
+                if (!isNaN(parseFloat(data.cbbi)) && parseFloat(data.cbbi) < 15) finalBottomTriggers++;
+                
+                if (!isNaN(parseFloat(data.mvrv)) && parseFloat(data.mvrv) > 3.7) finalTopWarnings++;
+                if (!isNaN(parseFloat(data.nupl)) && parseFloat(data.nupl) > 0.75) finalTopWarnings++;
+                if (parseFloat(data.fearAndGreed) > 80) finalTopWarnings++;
+                if (parseFloat(data.puellMultiple) > 3.0) finalTopWarnings++;
+                if (!isNaN(parseFloat(data.cbbi)) && parseFloat(data.cbbi) > 80) finalTopWarnings++;
+                if (data.piCycleTriggered) finalTopWarnings++;
+
+                eval.triggers = finalBottomTriggers;
+                eval.topWarnings = finalTopWarnings;
+                if (eval.triggers >= 6) eval.bottomRating = '强力买入';
+                else if (eval.triggers >= 4) eval.bottomRating = '分批定投';
+                else eval.bottomRating = '持币观望';
+                
+                if (eval.topWarnings >= 4) eval.topRating = '极度危险';
+                else if (eval.topWarnings >= 2) eval.topRating = '顶部预警';
+                else eval.topRating = '安全';
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('dashboard').classList.remove('hidden');
